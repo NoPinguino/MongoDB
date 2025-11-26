@@ -3,7 +3,7 @@ use('anime')
 // db.createCollection('armas')
 // db.createCollection('personajes')
 
-// INSERTS:
+// INSERTS
 // db.personajes.insertMany([
 //   {
 //     "nombre": "Saitama",
