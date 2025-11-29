@@ -144,3 +144,6 @@ use('anime')
 //   "acknowledged": true,
 //   "deletedCount": 7
 // }
+
+// db.getMongo().getDBs()
+// db.getCollectionNames()
