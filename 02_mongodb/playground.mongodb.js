@@ -66,3 +66,6 @@ use('Biblioteca2')
 
 // 5. EDITORIAL $eq PLANETA
 // db.libros.find({editorial: {$eq: "Planeta"}})
+
+// 5. ORDENAR RESULTADOS (A-Z)
+// db.libros.find({}).sort({titulo: 1})
