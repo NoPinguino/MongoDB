@@ -69,3 +69,12 @@ use('Biblioteca2')
 
 // 5. ORDENAR RESULTADOS (A-Z)
 // db.libros.find({}).sort({titulo: 1})
+
+// 6. CONTAR RESULTADOS
+// db.libros.find({precio: {$gt: 40}}).count()
+
+// 7. LIMITAR RESULTADOS
+// db.libros.find({}).sort({titulo: 1}).limit(5)
+
+// 8. ENBELLECE LA SALIDA EN CONSOLA (antiguamente)
+// db.libros.find({}).sort({titulo: 1}).limit(5).pretty()
