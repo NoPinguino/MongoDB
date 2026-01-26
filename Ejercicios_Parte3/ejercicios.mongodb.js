@@ -223,23 +223,75 @@ use("juegos")
 
 
 // 11. Encuentra los videojuegos con un precio inferior a 30 y que tengan al menos 2 premios. Muestra el título, precio y número de premios.
-
+// db.videogames.aggregate([
+//     {
+//         $project: {
+//             _id: "$title",
+//             price: 1,
+//             cantPremios: {$size: "$awards"}
+//         }
+//     },
+//     {
+//         $match: {
+//             price: {$lt: 30},
+//             cantPremios: {$gte: 2}
+//         }
+//     },
+// ])
 
 
 // 12. Muestra el año de lanzamiento con mayor número de videojuegos publicados. El resultado debe mostrar el año y la cantidad de juegos.
-
+// db.videogames.aggregate([
+//     {
+//         $group: {
+//             _id: "$releaseYear",
+//             cantJuegos: { $sum: 1 },
+//         }
+//     },
+//     {
+//         $sort: { cantJuegos: -1 }
+//     },
+//     {
+//         $limit: 1
+//     }
+// ])
 
 
 // 13. Calcula el rating promedio de los videojuegos desarrollados por empresas de cada país, pero solo para aquellos países que tengan un rating promedio superior a 92.
-
+// db.videogames.aggregate([
+//     {
+//         $group: {
+//             _id: "$developer.country",
+//             avgRating: { $avg: "$rating" }
+//         }
+//     }, 
+//     {
+//         $match: {
+//             avgRating: { $gt: 92 }
+//         }
+//     }
+// ])
 
 
 // 14. Encuentra los videojuegos que contengan la palabra “The” en el título y que tengan un rating superior a 92. Usa una expresión regular y muestra título, rating y desarrollador.
 
-
+// NO SE HACE, NO ENTRAN LOS REGEX EN EL TEMARIO
 
 // 15. Muestra los 3 géneros con mayor promedio de copias vendidas. Debe aparecer el género y el promedio de ventas.
-
+// db.videogames.aggregate([
+//     {
+//         $unwind: "$genre"
+//     },
+//     {
+//         $project: {
+//             _id: "$genre",
+//             avgCopiesSold: { $avg: "$copiesSold" }
+//         }
+//     },
+//     {
+//         $limit: 3
+//     }
+// ])
 
 
 // 16. Crea una agregación que muestre el videojuego más caro y el más barato de cada año de lanzamiento. El resultado debe incluir el año, y para cada uno: título del juego más caro, su precio, título del juego más barato y su precio.
