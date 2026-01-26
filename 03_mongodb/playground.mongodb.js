@@ -138,7 +138,7 @@ use('Astronomia')
 // 10. Eliminar Sputnik 1
 // db.objetos_espaciales.deleteOne({nombre: "Sputnik 1"})
 
-// 11. Encuentra nombres que empiecen por la S
+// 11. ¡¡¡ESTO NO ENTRA!!! Encuentra nombres que empiecen por la S
 // db.objetos_espaciales.find({nombre: {$regex: "^S"}})
 
 // 12. Encuentra documentos con los campos "lunas_principales" o "lunas_conocidas"
@@ -159,9 +159,15 @@ use('Astronomia')
 // db.objetos_espaciales.find({tipo: {$ne: "Planeta"}})
 
 // 15. Encontrar estrellas o cometas (tipo)
-// db.objetos_espaciales.find(
-//     {tipo: {$in: ["Estrella", "Cometa"]}}
-// )
+// db.objetos_espaciales.find({
+//     $or: [
+//         {tipo: "Estrella"},
+//         {tipo: "Cometa"}
+//     ]
+// })
+
+// 15. ALTERNATIVA
+// {tipo: {$in: ["Estrella", "Cometa"]}}
 
 // 16. Planeta con exactamente 4 lunas
 // db.objetos_espaciales.find({
