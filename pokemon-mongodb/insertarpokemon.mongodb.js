@@ -1,11 +1,16 @@
 use("pokemon");
 
-// Pon la ruta absoluta de tu JSON para insertar aquí:
-const data = require("fs").readFileSync(
-    "/home/misael/Documents/asignaturas/acceso-datos/mongodb/pokemon-mongodb/pokemons.json",
-    "utf8"
-);
+// INSERTAR (USA TU RUTA ABSOLUTA):
 
-const pokemons = JSON.parse(data);
+// const data = require("fs").readFileSync(
+//     "/home/misael/Documents/asignaturas/acceso-datos/mongodb/pokemon-mongodb/pokemons.json",
+//     "utf8"
+// );
 
-db.pokemons.insertMany(pokemons);
+// const pokemons = JSON.parse(data);
+
+// db.pokemons.insertMany(pokemons);
+
+// ELIMINAR:
+
+// db.pokemons.drop()

@@ -279,18 +279,15 @@ use("juegos")
 
 // 15. Muestra los 3 géneros con mayor promedio de copias vendidas. Debe aparecer el género y el promedio de ventas.
 // db.videogames.aggregate([
+//     { $unwind: "$genre" },
 //     {
-//         $unwind: "$genre"
-//     },
-//     {
-//         $project: {
+//         $group: {
 //             _id: "$genre",
 //             avgCopiesSold: { $avg: "$copiesSold" }
 //         }
 //     },
-//     {
-//         $limit: 3
-//     }
+//     { $sort: { avgCopiesSold: -1 } },
+//     { $limit: 3 }
 // ])
 
 
@@ -319,15 +316,14 @@ use("juegos")
 
 // 17. Usando un cursor, calcula la media del rating de todos los videojuegos desarrollados por “FromSoftware”. Muestra el resultado en el siguiente formato: Average rating for FromSoftware games: XX.XX
 // let cursor = db.videogames.find({ "developer.name": "FromSoftware" })
-// let avgRating = 0
-// let num_videogames = 0
+// let totalRating = 0
+// let num = 0
 // while (cursor.hasNext()) {
 //     let doc = cursor.next()
-//     avgRating += doc.rating
-//     num_videogames++
+//     totalRating += doc.rating
+//     num++
 // }
-// avgRating = avgRating / num_videogames
-// print(`Average rating for FromSoftware games: ${avgRating}`)
+// print(`Average rating for FromSoftware games: ${totalRating/num}`)
 
 // let cursor = db.videogames.find({"developer.name": "FromSoftware"})
 // let totalRating = 0
@@ -336,24 +332,24 @@ use("juegos")
 //     totalRating += doc.rating
 //     num++
 // });
-// print(`Average rating for FromSoftware games: ${totalRating /num}`)
+// print(`Average rating for FromSoftware games: ${totalRating/num}`)
 
 
 // 18. Usando un cursor, recorre todos los videojuegos con precio superior a 50 y muestra por pantalla el título y el precio de cada uno con el formato: Title: XXXXX - Price: $XX.XX
-// cursor = db.videogames.find({ price : {$gt: 50} })
+// let cursor = db.videogames.find({ price : {$gt: 50} })
 // cursor.forEach(doc => {
-//     titulo = doc.title
-//     precio = doc.price
+//     let titulo = doc.title
+//     let precio = doc.price
 //     print(`\nTitle: ${titulo} - Price: $${precio}`)
 // });
 
 
 // 19. Usando un cursor, encuentra el videojuego con más copias vendidas. Muestra el título y las copias vendidas.
-// cursor = db.videogames.find({})
-// maxCopies = 0
-// maxTitle = ""
+// let cursor = db.videogames.find({})
+// let maxCopies = 0
+// let maxTitle = ""
 // cursor.forEach(doc => {
-//     copies = doc.copiesSold
+//     let copies = doc.copiesSold
 //     if (copies > maxCopies) {
 //         maxCopies = copies
 //         maxTitle = doc.title
