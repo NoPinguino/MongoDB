@@ -15,10 +15,7 @@ use("pokemon");
 
 // db.pokemons.drop()
 
-
 /*
-FORMATO EN EL QUE SE GENERA:
-
 {
 "_id": 1,
 "pokedexNumber": 1,
