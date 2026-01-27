@@ -318,15 +318,64 @@ use("juegos")
 
 
 // 17. Usando un cursor, calcula la media del rating de todos los videojuegos desarrollados por “FromSoftware”. Muestra el resultado en el siguiente formato: Average rating for FromSoftware games: XX.XX
+// let cursor = db.videogames.find({ "developer.name": "FromSoftware" })
+// let avgRating = 0
+// let num_videogames = 0
+// while (cursor.hasNext()) {
+//     let doc = cursor.next()
+//     avgRating += doc.rating
+//     num_videogames++
+// }
+// avgRating = avgRating / num_videogames
+// print(`Average rating for FromSoftware games: ${avgRating}`)
 
+// let cursor = db.videogames.find({"developer.name": "FromSoftware"})
+// let totalRating = 0
+// let num = 0
+// cursor.forEach(doc => {
+//     totalRating += doc.rating
+//     num++
+// });
+// print(`Average rating for FromSoftware games: ${totalRating /num}`)
 
 
 // 18. Usando un cursor, recorre todos los videojuegos con precio superior a 50 y muestra por pantalla el título y el precio de cada uno con el formato: Title: XXXXX - Price: $XX.XX
-
+// cursor = db.videogames.find({ price : {$gt: 50} })
+// cursor.forEach(doc => {
+//     titulo = doc.title
+//     precio = doc.price
+//     print(`\nTitle: ${titulo} - Price: $${precio}`)
+// });
 
 
 // 19. Usando un cursor, encuentra el videojuego con más copias vendidas. Muestra el título y las copias vendidas.
-
+// cursor = db.videogames.find({})
+// maxCopies = 0
+// maxTitle = ""
+// cursor.forEach(doc => {
+//     copies = doc.copiesSold
+//     if (copies > maxCopies) {
+//         maxCopies = copies
+//         maxTitle = doc.title
+//     }
+// });
+// console.log(`El juego con más copias vendidas es ${maxTitle} con ${maxCopies} millones de copias vendidas.`)
 
 
 // 20. Usando un cursor, cuenta cuántos videojuegos hay de cada plataforma. Ten en cuenta que cada videojuego puede tener múltiples plataformas. Muestra el resultado con el formato: Platform: XXXXX - Count: XX
+// let videojuegos_por_plataforma = new Map();
+
+// let cursor = db.videogames.find({})
+// cursor.forEach(doc => {
+//     plataformas = doc.platforms // Es un array
+//     for (plataforma of plataformas) {
+//         if (videojuegos_por_plataforma.has(plataforma)) {
+//             videojuegos_por_plataforma.set(plataforma, videojuegos_por_plataforma.get(plataforma) + 1);
+//         } else {
+//             videojuegos_por_plataforma.set(plataforma, 1);
+//         }
+//     }
+// });
+// for ([k, v] of videojuegos_por_plataforma) {
+//     print(`${k}: ${v}`)
+// }

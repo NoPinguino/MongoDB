@@ -1,6 +1,6 @@
 use("pokemon");
 
-// Pon la tuta absoluta de tu JSON para insertar aquí:
+// Pon la ruta absoluta de tu JSON para insertar aquí:
 const data = require("fs").readFileSync(
     "/home/misael/Documents/asignaturas/acceso-datos/mongodb/pokemon-mongodb/pokemons.json",
     "utf8"
