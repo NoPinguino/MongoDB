@@ -295,7 +295,26 @@ use("juegos")
 
 
 // 16. Crea una agregación que muestre el videojuego más caro y el más barato de cada año de lanzamiento. El resultado debe incluir el año, y para cada uno: título del juego más caro, su precio, título del juego más barato y su precio.
-
+// db.videogames.aggregate([
+//     {
+//         // Se ordena en bloques de año de salida, y cada bloque se ordena en precio.
+//         $sort: { releaseYear: 1, price: 1 }
+//     },
+//     {
+//         $group: {
+//             _id: "$releaseYear",
+//             // Titulo y precio del más barato
+//             masBaratoTitulo: { $last: "$title" },
+//             masBaratoPrecio: { $last: "$price" },
+//             // Titulo y precio del más caro
+//             masCaroTitulo: { $first: "$title" },
+//             masCaroPrecio: { $last: "$price" },
+//         }
+//     },
+//     {
+//         $sort: { _id: 1 }
+//     }
+// ])
 
 
 // 17. Usando un cursor, calcula la media del rating de todos los videojuegos desarrollados por “FromSoftware”. Muestra el resultado en el siguiente formato: Average rating for FromSoftware games: XX.XX
