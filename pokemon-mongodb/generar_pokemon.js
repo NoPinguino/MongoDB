@@ -75,7 +75,7 @@ async function getPokemon(id) {
                 name: a.ability.name,
                 hidden: a.is_hidden
             })),
-            moves: p.moves.slice(0, 8).map(m => m.move.name)
+            moves: p.moves.map(m => m.move.name)
         });
 
         // 👇 Progreso por terminal cada 10 Pokémon
