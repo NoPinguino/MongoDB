@@ -1,9 +1,9 @@
 use("pokemon");
 
-// INSERTAR (USA TU RUTA ABSOLUTA):
+// INSERTAR (UTILIZA RUTA ABSOLUTA DE TU JSON):
 
 // const data = require("fs").readFileSync(
-//     "/home/misael/Documents/asignaturas/acceso-datos/mongodb/pokemon-mongodb/pokemons.json",
+//     "/home/misael/Documents/asignaturas/acceso-datos/mongodb/pokemon-mongodb/script_json/pokemons.json",
 //     "utf8"
 // );
 
