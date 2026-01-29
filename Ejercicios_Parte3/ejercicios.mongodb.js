@@ -63,6 +63,17 @@ use("juegos")
 //             _id: "$genre",
 //             avgPrice: { $avg: "$price" }
 //         }
+//     },
+//     {
+//         $project: {
+//             _id: 1,
+//             avgPrice: { $round: ["$avgPrice", 2] }
+//         }
+//     },
+//     {
+//         $sort: {
+//             avgPrice: -1
+//         }
 //     }
 // ])
 
