@@ -472,3 +472,241 @@ use("pokemon")
 // for (let [k,v] of contador_tipos) {
 //     console.log(`${k} : ${v}`)
 // }
+
+
+// 21. Encuentra los 5 Pokémon con mayor defensa especial (stats.spDefense). Muestra pokedexNumber, name y stats.spDefense.
+// db.pokemons.find({}, {"_id": 0, "name": 1, "stats.specialDefense": 1 }).sort({"stats.specialDefense": -1}).limit(5)
+// db.pokemons.aggregate([
+//     {
+//         $sort: {
+//             "stats.specialDefense": -1
+//         }
+//     },
+//     {
+//         $project: {
+//             "_id": 0,
+//             "nombre": "$name",
+//             "defensa_especial": "$stats.specialDefense",
+//         }
+//     },
+//     {
+//         $limit: 5
+//     }
+// ])
+
+
+// 22. Muestra todos los Pokémon que sean legendarios y que tengan más de un tipo. Muestra name, types e isLegendary.
+// db.pokemons.find({
+//     "isLegendary": true,
+//     "types.1": {$exists: true},
+// },{
+//     "_id": 0,
+//     "name": 1,
+//     "types": 1,
+//     "isLegendary": 1,
+// })
+
+
+// 23. Calcula el total de Pokémon por generación y tipo (combinación generación + tipo). Muestra generación, tipo y cantidad.
+// db.pokemons.aggregate([
+//     {
+//         $addFields: {
+//             "tipo_principal": { "$arrayElemAt": ["$types", 0] }
+//         }
+//     },
+//     {
+//         $group: {
+//             "_id": { "generation": "$generation", "type": "$tipo_principal" },
+//             "num_pkmn": { $sum: 1 }
+//         }
+//     },
+//     {
+//         $sort: {
+//             num_pkmn: -1
+//         }
+//     }
+// ])
+
+
+// 24. Encuentra los Pokémon cuyo peso esté entre 30 y 60 (inclusive) y que tengan velocidad menor a 70. Muestra name, weight y stats.speed.
+// db.pokemons.find({
+//     $and: [
+//         { "weight": { $gte: 30 } },
+//         { "weight": { $lte: 60 } },
+//     ],
+//     "stats.speed": {$lt: 70}
+// },{"_id": 0, "name": 1, "weight": 1, "stats.speed": 1})
+// db.pokemons.aggregate([
+//     {
+//         $match: {
+//             "weight": { $gte: 30 },
+//             "weight": { $lte: 60 },
+//             "stats.speed": { $lt: 70 },
+//         }
+//     },
+//     {
+//         $project: {
+//             "_id": 0,
+//             "name": 1,
+//             "weight": 1,
+//             "speed": "$stats.speed",
+//         }
+//     }
+// ])
+
+
+// 25. Muestra el Pokémon con menor ataque de cada generación. Resultado: generación, name y stats.attack.
+// db.pokemons.aggregate([
+//     {
+//         $sort: {
+//             "stats.attack": 1
+//         }
+//     },{
+//         $group: {
+//             _id: "$generation",
+//             nombre: {$first: "$name"},
+//             ataque: {$first: "$stats.attack"}
+//         }
+//     },{
+//         $sort: {
+//             ataque: 1
+//         }
+//     }
+// ])
+
+
+// 26. Calcula el promedio de altura (height) por tipo principal (primer elemento de types). Ordena de mayor a menor.
+// db.pokemons.aggregate([
+//     {
+//         $addFields: {
+//             "tipo_principal": { "$arrayElemAt": ["$types", 0] }
+//         }
+//     }, {
+//         $group: {
+//             "_id": "$tipo_principal",
+//             "avg_height": { $avg: "$height" },
+//         }
+//     }, {
+//         $project: {
+//             "_id": 0,
+//             "type": "$_id",
+//             "avg_height": { $round: ["$avg_height", 2] },
+//         }
+//     }, {
+//         $sort: { "avg_height": -1 }
+//     }
+// ])
+
+
+// 27. Encuentra los Pokémon que tengan exactamente 3 habilidades. Muestra name y número de habilidades.
+// db.pokemons.aggregate([
+//     {
+//         $match: {
+//             "abilities": { $size: 3 }
+//         }
+//     },
+//     {
+//         $project: {
+//             "_id": 0,
+//             "name": 1,
+//             "num_abilities": { $size: "$abilities" },
+//         }
+//     }
+// ])
+
+
+// 28. Muestra los tipos de Pokémon que tengan al menos un Pokémon legendario. Resultado: tipo y cantidad de legendarios.
+// db.pokemons.aggregate([
+//     {
+//         $unwind: "$types"
+//     },
+//     {
+//         $match: {
+//             "isLegendary": true,
+//         }
+//     },
+//     {
+//         $group: {
+//             "_id": "$types",
+//             "cont_legendarios": { $sum: 1 }
+//         }
+//     },
+//     {
+//         $sort: { "cont_legendarios": -1 }
+//     }
+// ])
+
+
+// 29. Encuentra el Pokémon más ligero de cada tipo. Muestra tipo, name y weight.
+// db.pokemons.aggregate([
+//     {
+//         $unwind: "$types"
+//     },
+//     {
+//         $sort: {
+//             "weight": 1
+//         }
+//     },
+//     {
+//         $group: {
+//             "_id": "$types",
+//             "ligero_nombre": { $first: "$name"},
+//             "ligero_peso": { $first: "$weight" },
+//         }
+//     },
+//     {
+//         $project: {
+//             "ligero_peso": { $round: [ "$ligero_peso", 2 ] },
+//             "ligero_nombre": 1,
+//         }
+//     },
+//     {
+//         $sort: { "ligero_peso": 1 }
+//     }
+// ])
+
+
+// 30. Calcula cuántos Pokémon tienen ataque mayor que defensa (stats.attack > stats.defense). Muestra solo el total.
+// db.pokemons.aggregate([
+//     {
+//         $match: {
+//             $expr: { $gt: ["$stats.attack", "$stats.defense"] }
+//         }
+//     },
+//     {
+//         $group: {
+//             _id: "Pokémon con más ataque que defensa",
+//             total: { $sum: 1 }
+//         }
+//     }
+// ])
+
+
+// 31. Muestra los Pokémon cuya suma total de stats (hp + attack + defense + spAttack + spDefense + speed) sea mayor a 500. Muestra name y total.
+
+
+// 32. Agrupa los Pokémon por número de tipos (1 o 2) y calcula el promedio de velocidad de cada grupo.
+
+
+// 33. Encuentra los Pokémon que compartan al menos un tipo con un Pokémon legendario (sin ser legendarios). Muestra name y types.
+
+
+// 34. Muestra los 3 Pokémon con más habilidades ocultas (hidden: true). Muestra name y cantidad de habilidades ocultas.
+
+
+// 35. Calcula el promedio de peso por generación, pero solo para Pokémon que tengan velocidad mayor a 80.
+
+
+// 36. Encuentra los Pokémon cuya altura sea mayor que el promedio de altura de su generación. Muestra name, generation y height.
+
+
+// 37. Usando un cursor, muestra todos los Pokémon cuyo nombre empiece por vocal. Formato: Name: XXXX.
+
+
+// 38. Usando un cursor, calcula cuántos Pokémon tienen más movimientos que el promedio de movimientos del total de Pokémon.
+
+
+// 39. Usando un cursor, encuentra el Pokémon con el mayor ratio ataque / defensa. Muestra name y el valor del ratio con 2 decimales.
+
+
+// 40. Usando un cursor, cuenta cuántos Pokémon hay por generación y muestra el resultado ordenado por generación ascendente.
