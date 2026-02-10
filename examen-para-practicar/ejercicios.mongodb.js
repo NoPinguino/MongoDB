@@ -2,32 +2,42 @@ use("examen_23_24")
 
 // 1. (2 ptos)
 /*
-Considera la colecci ́on orders proporcionada por el profesor. Muestra el documento con el cuarto
+Considera la colección orders proporcionada por el profesor. Muestra el documento con el cuarto
 precio total más bajo. Obviamente, no puedes seleccionarlo mirando el id.
 */
-// db.orders.find({}).sort({total_price:1}).skip(3).limit(1)
+// db.orders.find({},{
+//     "_id": 0,
+//     "total_price": 1
+// }).sort({"total_price": 1}).skip(3).limit(1)
 
 // 2. (2 ptos)
 /*
 Considera la colección orders proporcionada por el profesor. Analiza el siguiente output y, haciendo
-uso de las agregaciones, crea un método en JS que produzca la misma salida. Averiguar qu ́e se está imprimiendo
+uso de las agregaciones, crea un método en JS que produzca la misma salida. Averiguar qué se está imprimiendo
 es también parte del ejercicio.
 
-Notas personales:
-- En la salida aparece un campo que no existe, lo voy a tener que crear.
-- Creo que el campo que aparece en la salida es un sumatorio de los campos 'quantity' de los subdocumentos (documentos embebidos) de la lista items. (sum_quantity == 8)
+[{
+    " _id ": " order_007 ",
+    " totalItems ": 8
+}]
 */
 // db.orders.aggregate([
 //     {
-//         $project: {
-//             "_id": 1,
-//             "totalQuantity": {$sum: "$items.quantity"}
+//         $addFields: {
+//             totalItems: {$sum: "$items.quantity"},
 //         }
 //     },
 //     {
-//         $match: {
-//             "totalQuantity": 8
+//         $project: {
+//             "_id": 1,
+//             "totalItems": 1,
 //         }
+//     },
+//     {
+//         $sort: { totalItems: -1 }
+//     },
+//     {
+//         $limit: 1
 //     }
 // ])
 
@@ -40,21 +50,20 @@ pedidos, cuyo precio total es 45 y 70 respectivamente. El resultado que debes mo
 
 resultado en consola: Average total price for customer cust_002 : 57.5
 */
-// const cursor = db.orders.find({"customer_id": "cust_002"}) // El cursor contiene dos pedidos.
-// let precioTotal = 0
-// let count = 0
-// let cust_id // Me pide que el id de cliente sea variable
+// const cursor = db.orders.find({ "customer_id": "cust_002" })
+// let cant_pedidos = 0;
+// let total_pedidos = 0;
 // cursor.forEach(doc => {
-//     precioTotal += doc.total_price
-//     count++
-//     cust_id = doc.customer_id
-// })
-// console.log(`Average total price for customer: ${cust_id} : ${precioTotal / count}`)
+//     total_pedidos += doc.total_price;
+//     cant_pedidos++;
+// });
+// print(`Average total price for customer cust_002: ${total_pedidos / cant_pedidos}`)
+
 
 // 4. (2 ptos)
 /*
 Considera la colección products proporcionada por el profesor. Usando agregaciones, muestra el
-precio medio de los productos de cada categor ́ıa. Es decir, muestra el siguiente resultado:
+precio medio de los productos de cada categor ía. Es decir, muestra el siguiente resultado:
 
 [
     {
@@ -66,32 +75,26 @@ precio medio de los productos de cada categor ́ıa. Es decir, muestra el siguie
         "category": "Fashion"
     }
 ]
-
-Notas personales:
-- Se agupa por categoría.
-- Se crean campos para un nombre legible de categoría (no imprimir _id) y un promedio del precio.
-- ¿Se ordena de mayor a menor según precio promedio?
 */
 // db.products.aggregate([
 //     {
 //         $group: {
 //             "_id": "$category",
-//             "averagePrice": { $avg: "$price" },
-//         },
+//             "averagePrice": { $avg: "$price" }
+//         }
 //     },
 //     {
 //         $project: {
 //             "_id": 0,
-//             "averagePrice": { $round: ["$averagePrice", 0] },
+//             "averagePrice": { $round: ["$averagePrice", 2] },
 //             "category": "$_id",
 //         }
 //     },
 //     {
-//         $sort: {
-//             "averagePrice": -1
-//         }
+//         $sort: { "averagePrice": -1 }
 //     }
 // ])
+
 
 // 5. (2 ptos)
 /*
@@ -112,11 +115,11 @@ páginas. Para buscar los libros con la palabra The debes usar title: /The/. El 
 */
 // db.books.find({
 //     "author.nationality": "British",
-//     "pages": {$gt: 250},
+//     "pages": { $gt: 250 },
 //     "title": /The/,
 // },{
 //     "_id": 0,
 //     "title": 1,
 //     "author.name": 1,
-//     "pages": 1
+//     "pages": 1,
 // })
