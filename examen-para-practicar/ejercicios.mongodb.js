@@ -22,15 +22,11 @@ es también parte del ejercicio.
 }]
 */
 // db.orders.aggregate([
+//     { $unwind: "$items" },
 //     {
-//         $addFields: {
-//             totalItems: {$sum: "$items.quantity"},
-//         }
-//     },
-//     {
-//         $project: {
-//             "_id": 1,
-//             "totalItems": 1,
+//         $group: {
+//             _id: "$_id",
+//             totalItems: { $sum: "$items.quantity" }
 //         }
 //     },
 //     {
@@ -57,7 +53,7 @@ resultado en consola: Average total price for customer cust_002 : 57.5
 //     total_pedidos += doc.total_price;
 //     cant_pedidos++;
 // });
-// print(`Average total price for customer cust_002: ${total_pedidos / cant_pedidos}`)
+// print(`Average total price for customer cust_002 : ${total_pedidos / cant_pedidos}`)
 
 
 // 4. (2 ptos)
@@ -123,3 +119,105 @@ páginas. Para buscar los libros con la palabra The debes usar title: /The/. El 
 //     "author.name": 1,
 //     "pages": 1,
 // })
+
+
+// EJERCICIOS EXTRA (CHATGPT):
+
+
+// 1. (2 ptos)
+/*
+Considera la colección orders proporcionada por el profesor. Muestra el pedido entregado
+(status = "delivered") con el precio total más alto. Obviamente, no puedes seleccionarlo
+mirando el id.
+*/
+
+
+// 2. (2 ptos)
+/*
+Considera la colección orders proporcionada por el profesor. Haciendo uso de agregaciones,
+muestra el número total de productos distintos vendidos en todos los pedidos entregados
+(status = "delivered"). Un producto cuenta una sola vez por pedido, independientemente
+de la cantidad.
+*/
+
+
+// 3. (2 ptos)
+/*
+Considera la colección orders proporcionada por el profesor. Haciendo uso de un cursor,
+calcula el precio medio de los pedidos pagados con credit_card. El resultado que debes
+mostrar por pantalla es el siguiente (donde X es una variable):
+
+Average total price for credit_card orders: X
+*/
+
+
+// 4. (2 ptos)
+/*
+Considera la colección orders proporcionada por el profesor. Muestra los pedidos enviados
+a la ciudad de Barcelona cuyo total_price sea mayor que 50. Solo deben mostrarse los
+siguientes campos:
+- _id
+- customer_id
+- total_price
+- shipping_address.city
+*/
+
+
+// 5. (2 ptos)
+/*
+Considera la colección orders proporcionada por el profesor. Usando agregaciones, muestra
+cuántos pedidos hay por cada método de pago. El resultado debe tener el siguiente formato:
+
+[
+  { "payment_method": "credit_card", "count": X },
+  { "payment_method": "paypal", "count": Y }
+]
+*/
+
+
+// 6. (2 ptos)
+/*
+Considera la colección products proporcionada por el profesor. Muestra los productos de
+la categoría "Electronics" que estén en stock y cuyo precio sea mayor que 300, ordenados
+por precio de forma descendente.
+*/
+
+
+// 7. (2 ptos)
+/*
+Considera la colección products proporcionada por el profesor. Usando agregaciones, muestra
+el precio medio de los productos de cada categoría, redondeado a dos decimales y sin
+mostrar el campo _id.
+*/
+
+
+// 8. (2 ptos)
+/*
+Considera la colección books proporcionada por el profesor. Crea una consulta find() para
+mostrar los libros de autores británicos con más de 300 páginas. Solo deben mostrarse los
+siguientes campos:
+- title
+- author.name
+- pages
+- publication_year
+*/
+
+
+// 9. (2 ptos)
+/*
+Considera la colección books proporcionada por el profesor. Muestra los libros que
+pertenezcan al género "Fantasy" y cuya valoración media (rating.average) sea mayor o igual
+que 4.8.
+*/
+
+
+// 10. (2 ptos)
+/*
+Considera la colección books proporcionada por el profesor. Usando agregaciones, muestra
+el número de libros por idioma. El resultado debe tener el siguiente formato:
+
+[
+  { "language": "English", "count": X },
+  { "language": "Spanish", "count": Y }
+]
+*/
